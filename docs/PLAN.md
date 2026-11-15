@@ -145,5 +145,22 @@ contain multiple commits.
 - Review running, paused, completed, and reduced-motion views in the browser.
 - Do not change simulation rules, timing, shared state, or product scope.
 
+## Milestone 5: release readiness
+
+- [x] 5.1. Audit: review requirements, race edge cases, accessibility coverage,
+      production-build browser behavior, and dependency advisories.
+- [x] 5.2. Audit follow-ups: make production-build browser verification repeatable,
+      reconcile specification wording, and document remaining dependency limitations.
+- [ ] 5.3. Final review: confirm documentation, verification results, and known limitations.
+
+### Step 5.2 acceptance criteria
+
+- Build and type-check the application before starting the browser-test preview server.
+- Run the existing Chromium, Firefox, and WebKit suite against the fresh production build.
+- Do not reuse an existing server that could serve stale or development assets.
+- Keep the specification aligned with implemented playback and track behavior.
+- Review compatible dependency fixes; document advisories that require upstream changes.
+- Preserve application behavior and verify unit tests, linting, formatting, and browser tests.
+
 The condition-speed relationship and coefficients are deliberate product decisions,
 with their rationale and outstanding confirmation recorded in docs/SPEC.md.

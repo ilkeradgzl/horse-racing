@@ -106,8 +106,8 @@ finishTime = roundDistance / speed
 - Clamp progress at the finish line and order results by unrounded finish time.
 - Break exact ties using the original participant order.
 - A round completes when all 10 participants have finished.
-- Keep simulation time separate from animation playback speed; presentation timing
-  remains a later decision. Animation frame rate must not affect results.
+- Keep simulation time separate from animation playback speed; the playback rules
+  below define presentation timing. Animation frame rate must not affect results.
 
 ### Domain API
 
@@ -178,7 +178,7 @@ finishTime = roundDistance / speed
   name, and simulated finish time in seconds to two decimal places. Ranking uses
   unrounded values; identical displayed times can have different positions.
 - Keep completed results visible while later rounds run. Generating a new schedule
-  clears them. Horse track animation belongs to the racing interface milestone.
+  clears them.
 
 ## Animated track
 

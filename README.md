@@ -46,7 +46,9 @@ npm run dev
 | `npm run test:unit -- --run` | Run unit/component tests once                    |
 | `npm run test:e2e`           | Run headless Chromium, Firefox, and WebKit tests |
 
-`npm run test:unit` starts watch mode. Playwright starts its own development server.
+`npm run test:unit` starts watch mode. Playwright builds the application and starts
+its own production preview server on port 4173. Keep that port available; tests
+do not reuse an existing server, so they always exercise a fresh build.
 
 ## Project guide
 
@@ -72,3 +74,8 @@ npm run dev
 Run `npm audit` to review dependency advisories and `npm audit --omit=dev` to
 check production dependencies separately. Review dependency updates for
 compatibility before applying them.
+
+Known development-tool advisories affect transitive `glob` and `minimatch`
+dependencies used by Vue Test Utils and TypeScript ESLint. Their upstream version
+ranges currently exclude the patched releases. Keep these findings visible in
+dependency reviews and adopt compatible fixes when available.
