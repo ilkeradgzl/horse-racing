@@ -20,13 +20,29 @@ Track unresolved behavior in [the specification](SPEC.md).
 - Type checking, linting, formatting, component and browser smoke tests, production
   build, and development server startup verified.
 
-## Next milestone: horse and schedule generation
+## Milestone 2: horse and schedule generation
 
-- Define when horses are generated and how schedule regeneration behaves.
-- Implement horse generation and six-round scheduling as framework-independent rules.
-- Verify horse count, unique colors, condition boundaries, round distances, and
-  participant uniqueness with deterministic tests.
-- Provide a minimal interface for inspecting generated data.
+Each step is implemented, verified, and reviewed independently. A milestone may
+contain multiple commits.
 
-Condition/performance modeling belongs to race execution. Resolve pause/resume
-before implementing race controls, and visual direction before interface styling.
+- [x] 2.1. Horse generation: domain type, fixed color palette, random conditions,
+      and deterministic unit tests.
+- [ ] 2.2. Schedule generation: six rounds, required distances, distinct random
+      participants within each round, and focused unit tests.
+- [ ] 2.3. Vue integration: Pinia state, Generate control, horse list, and schedule display.
+
+### Step 2.1 acceptance criteria
+
+- Generate 20 horses with unique IDs, display names, and colors.
+- Use names `Horse 01` through `Horse 20` and a fixed palette of 20 distinct colors.
+- Generate integer condition scores from 1 to 100 inclusive.
+- Keep generation independent of Vue and Pinia, with an injectable random source
+  for deterministic tests and Math.random as the default.
+- Return fresh arrays and horse objects on every call.
+- Verify generation rules, condition boundaries, and roster independence.
+- Do not introduce schedule generation, shared state, or UI integration.
+
+Before step 2.3, define when horses are generated and how schedule regeneration
+behaves. Condition/performance modeling belongs to milestone 3. Resolve
+pause/resume before implementing race controls, and visual direction before
+interface styling.

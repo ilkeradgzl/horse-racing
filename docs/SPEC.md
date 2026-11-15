@@ -12,6 +12,17 @@
 - Horses visibly move during races.
 - Results appear sequentially as each round concludes.
 
+## Horse roster
+
+- Each horse has an ID, display name, color, and condition score.
+- Generate exactly 20 horses, named `Horse 01` through `Horse 20`, with IDs
+  `horse-01` through `horse-20`. IDs identify horses within a roster.
+- Assign colors from a fixed palette of 20 distinct hexadecimal colors.
+- IDs, names, and colors remain consistent across generated rosters.
+- Generate each condition independently as a random integer from 1 to 100 inclusive.
+- Each generation returns a new roster with new horse objects.
+- Roster generation timing and schedule regeneration behavior remain pending.
+
 ## Technical approach
 
 - Vue 3, TypeScript, Vite, and Pinia.

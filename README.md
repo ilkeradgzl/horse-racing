@@ -34,6 +34,8 @@ npm run dev
 
 - `src/main.ts`: creates the Vue app, registers Pinia, and mounts `App.vue`.
 - `src/App.vue`: root application component.
+- `src/domain/horse.ts`: horse model and framework-independent roster generation.
+- `src/domain/__tests__/`: deterministic domain unit tests.
 - `src/__tests__/`: component tests using Vue Test Utils and Vitest.
 - `e2e/`: Playwright browser tests.
 - [Specification](docs/SPEC.md): requirements, decisions, and open questions.
