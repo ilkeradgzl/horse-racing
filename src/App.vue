@@ -4,12 +4,20 @@ import { storeToRefs } from 'pinia'
 import HorseList from '@/components/HorseList.vue'
 import RaceSchedule from '@/components/RaceSchedule.vue'
 import RaceResults from '@/components/RaceResults.vue'
+import RaceTrack from '@/components/RaceTrack.vue'
 import { useRaceClock } from '@/composables/useRaceClock'
 import { useRacingStore } from '@/stores/racing'
 
 const racing = useRacingStore()
-const { horses, rounds, status, activeRound, elapsedSeconds, completedRounds } = storeToRefs(racing)
+const { horses, rounds, status, activeRound, elapsedSeconds, completedRounds, progress } =
+  storeToRefs(racing)
 useRaceClock()
+
+const displayedRound = computed(() =>
+  activeRound.value
+    ? (rounds.value.find((round) => round.number === activeRound.value?.roundNumber) ?? null)
+    : (rounds.value[0] ?? null),
+)
 
 const raceStatus = computed(() => {
   if (status.value === 'running' || status.value === 'paused') {
@@ -66,6 +74,7 @@ function handleRaceControl() {
           </p>
           <p>Each round plays in approximately 8 seconds, excluding pauses.</p>
         </section>
+        <RaceTrack :round="displayedRound" :horses="horses" :progress="progress" />
         <RaceSchedule :rounds="rounds" :horses="horses" />
         <RaceResults :completed-rounds="completedRounds" :horses="horses" />
       </div>

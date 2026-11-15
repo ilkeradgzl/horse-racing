@@ -8,7 +8,10 @@ The horse list shows the session's 20 horses, including their conditions and col
 Select **Generate schedule** to create six rounds with 10 participants each.
 Select **Start** to run all six rounds in sequence, approximately eight real seconds
 per round. **Pause** freezes progress; **Resume** continues from the same point.
+The track previews the first round after generation, then shows colored horses
+moving through ten lanes. Positions freeze on Pause and reset for each new round.
 Results appear after each round with simulated finish times, independently of playback speed.
+Reduced-motion preferences hide moving indicators while preserving distances and results.
 
 Schedule generation is disabled while running or paused. After completion,
 generate another schedule to clear results and prepare a new program; the horse
@@ -46,7 +49,8 @@ npm run dev
 
 - `src/main.ts`: creates the Vue app, registers Pinia, and mounts `App.vue`.
 - `src/App.vue`: application layout and schedule generation control.
-- `src/components/`: horse list, schedule, and completed results presentation.
+- `src/components/`: horse list, animated track, schedule, and completed results presentation.
+- `src/components/HorseIcon.vue`: decorative SVG artwork that inherits its color from the parent.
 - `src/composables/useRaceClock.ts`: scoped playback clock and round-time scaling.
 - `src/stores/racing.ts`: session roster, schedule generation, race lifecycle,
   elapsed-time updates, and completed-round results.

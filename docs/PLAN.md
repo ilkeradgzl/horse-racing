@@ -115,6 +115,24 @@ contain multiple commits.
   complete program execution, and narrow layouts.
 - Keep horse track animation and final visual design in milestone 4.
 
+## Milestone 4: racing interface
+
+- [x] 4.1. Animated track: preview, ten participant lanes, simulation-driven horse
+      movement, pause and finish states, responsive bounds, and reduced motion.
+- [ ] 4.2. Interface polish: review dashboard arrangement, responsive hierarchy,
+      visual consistency, and accessibility across the complete experience.
+
+### Step 4.1 acceptance criteria
+
+- Keep the selected green and neutral visual style without rearranging the dashboard.
+- Show a first-round preview after generation and the active round during execution.
+- Position colored SVG horses from domain progress, without new timers or racing rules.
+- Keep horse artwork in a dedicated icon component; the track owns positioning and color.
+- Preserve participant order, reset positions for new rounds, freeze on Pause, and
+  retain finish-line positions after program completion.
+- Provide lane names, distances, and accessible progress descriptions.
+- Support a 320px viewport and reduced-motion preferences.
+- Verify position mapping, round changes, pause/resume, finish states, and browser movement.
+
 The condition-speed relationship and coefficients are deliberate product decisions,
 with their rationale and outstanding confirmation recorded in docs/SPEC.md.
-Resolve visual direction before final interface styling.

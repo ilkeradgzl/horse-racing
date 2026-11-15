@@ -180,6 +180,25 @@ finishTime = roundDistance / speed
 - Keep completed results visible while later rounds run. Generating a new schedule
   clears them. Horse track animation belongs to the racing interface milestone.
 
+## Animated track
+
+- Keep the green and neutral visual style. The reference design guides functionality,
+  without requiring a matching dashboard arrangement.
+- Preview the first scheduled round at the starting line after generation. Show an
+  empty track state before a schedule exists.
+- Display 10 lanes in participant order, with lane number, horse name, unique
+  horse color, distance traveled, and a visible finish line.
+- Drive horizontal horse positions directly from simulation progress as a fraction
+  of round distance. The track owns no timer or additional race state.
+- Keep markers within the course, freeze positions while paused, switch to the new
+  participants when rounds advance, and retain the last round at the finish line.
+- Use scalable inline SVG horse indicators and responsive course widths without
+  image dependencies or horizontal page scrolling.
+- Expose each horse's progress through an accessible name, bounded percentage, and
+  distance description. Do not announce every frame through a live region.
+- Respect reduced motion by hiding the moving indicators while preserving visible
+  distances, accessible progress values, and race results.
+
 ## Technical approach
 
 - Vue 3, TypeScript, Vite, and Pinia.
@@ -193,7 +212,6 @@ finishTime = roundDistance / speed
 
 Resolve each decision before implementing the affected behavior.
 
-- Visual direction and the intended fidelity to the reference design.
 - Confirm the selected interpretation of condition as a speed advantage and the
   intended balance between condition and randomness; see the simulation model.
 
