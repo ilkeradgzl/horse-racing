@@ -34,19 +34,21 @@ npm run dev
 
 ## Commands
 
-| Command                      | Purpose                                          |
-| ---------------------------- | ------------------------------------------------ |
-| `npm run dev`                | Start the development server                     |
-| `npm run build`              | Type-check and build for production              |
-| `npm run build-only`         | Build without type checking                      |
-| `npm run preview`            | Preview the production build                     |
-| `npm run type-check`         | Check application, tooling, and test types       |
-| `npm run lint`               | Check ESLint rules without changing files        |
-| `npm run lint:fix`           | Apply available ESLint fixes                     |
-| `npm run format`             | Format project files                             |
-| `npm run format:check`       | Check formatting                                 |
-| `npm run test:unit -- --run` | Run unit/component tests once                    |
-| `npm run test:e2e`           | Run headless Chromium, Firefox, and WebKit tests |
+| Command                      | Purpose                                              |
+| ---------------------------- | ---------------------------------------------------- |
+| `npm run dev`                | Start the development server                         |
+| `npm run build`              | Type-check and build for production                  |
+| `npm run build-only`         | Build without type checking                          |
+| `npm run preview`            | Preview the production build                         |
+| `npm run type-check`         | Check application, tooling, and test types           |
+| `npm run lint`               | Check ESLint rules without changing files            |
+| `npm run lint:fix`           | Apply available ESLint fixes                         |
+| `npm run format`             | Format project files                                 |
+| `npm run format:check`       | Check formatting                                     |
+| `npm run test:unit -- --run` | Run unit/component tests once                        |
+| `npm run test:e2e`           | Run functional and visual browser tests              |
+| `npm run test:visual`        | Compare Chromium screenshots with approved baselines |
+| `npm run test:visual:update` | Generate screenshots for baseline review             |
 
 `npm run test:unit` starts watch mode. Playwright builds the application and starts
 its own production preview server on port 4173. Keep that port available; tests
@@ -80,6 +82,28 @@ available as workflow artifacts for seven days, including when browser tests fai
 Vercel deployments and CI run independently. A failing workflow does not block
 deployment; review checks before merging a pull request. Requiring the
 **Quality checks** status before merging needs a repository branch rule.
+
+### Visual regression tests
+
+The Chromium-only `visual` project covers the initial desktop view, generated
+desktop and mobile layouts, and completed desktop results. The full E2E command
+includes these four comparisons. A seeded random source and controlled clock
+keep horse conditions, participants, finish times, and captured states repeatable.
+These controls exist only in the tests.
+
+Approved screenshots live in `e2e/visual.spec.ts-snapshots/`. Playwright separates
+baselines by platform because fonts and rendering differ between macOS and Linux.
+Use `npm run test:visual` to compare on the current platform. For an intentional
+design change, run `npm run test:visual:update`, inspect every changed image, and
+commit the approved screenshots together with the design change.
+
+CI uses Ubuntu 24.04. To generate its Linux baselines, open **Actions → CI → Run
+workflow** on the branch containing the design change and enable **Generate visual
+baselines for review**. Download the `visual-baselines` artifact, review the images,
+and copy them into `e2e/visual.spec.ts-snapshots/` before committing. This manual
+mode generates candidates; it never commits them. Normal pushes and pull requests
+only compare against the committed baselines and fail on missing or changed images.
+Baseline generation and comparison must use the same Playwright version and OS.
 
 ## Simulation decisions
 

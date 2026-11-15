@@ -177,11 +177,24 @@ contain multiple commits.
 - [x] Use Node.js 24, lockfile-based installation, and existing quality commands.
 - [x] Run all three browser projects against the production build, including type checking.
 - [x] Retain browser reports for diagnosis and cancel superseded runs on the same ref.
-- [ ] Confirm the first hosted workflow run after review and push.
+- [x] Confirm the first hosted workflow run after review and push.
 
 The workflow uses read-only repository permissions and no deployment secrets.
 CI and Vercel deployment remain independent; branch protection is a separate
 repository setting.
+
+## Visual regression coverage
+
+- [x] Add four Chromium screenshot comparisons: initial desktop, generated desktop,
+      generated mobile, and completed desktop.
+- [x] Keep test data and race timing deterministic without application changes.
+- [x] Include visual comparisons in CI and provide an explicit manual baseline-generation mode.
+- [ ] Review and commit Linux baselines generated on Ubuntu 24.04.
+- [ ] Confirm the hosted comparisons pass against the reviewed Linux baselines.
+
+Keep platform-specific approved images under version control. Intentional design
+changes require reviewing image differences and updating the affected baselines.
+Normal CI must never approve or overwrite baseline changes automatically.
 
 The condition-speed relationship and coefficients are deliberate product decisions,
 with their rationale and outstanding confirmation recorded in docs/SPEC.md.
