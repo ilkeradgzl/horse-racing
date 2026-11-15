@@ -7,13 +7,17 @@ test('generates and replaces a schedule without changing the roster', async ({ p
   const rosterRows = page.getByRole('table', { name: 'Available horses' }).locator('tbody tr')
   await expect(rosterRows).toHaveCount(20)
   const roster = await rosterRows.allTextContents()
-  await expect(page.getByRole('status')).toHaveText('No schedule generated')
+  await expect(page.getByRole('status', { name: 'Schedule status' })).toHaveText(
+    'No schedule generated',
+  )
 
   const generate = page.getByRole('button', { name: 'Generate schedule' })
   await generate.focus()
   await page.keyboard.press('Enter')
 
-  await expect(page.getByRole('status')).toHaveText('6 rounds · 10 horses per round')
+  await expect(page.getByRole('status', { name: 'Schedule status' })).toHaveText(
+    '6 rounds · 10 horses per round',
+  )
   const rounds = page
     .getByRole('list', { name: 'Scheduled rounds', exact: true })
     .locator(':scope > li')

@@ -4,7 +4,7 @@
 
 - [x] 1. Application foundation: Vue, TypeScript, Pinia, development tooling, and documentation.
 - [x] 2. Horse and schedule generation: domain rules, focused unit tests, and a minimal inspection interface.
-- [ ] 3. Race execution: simulation, shared lifecycle, sequential rounds, and results.
+- [x] 3. Race execution: simulation, shared lifecycle, sequential rounds, and results.
 - [ ] 4. Racing interface: animated track, responsive layout, and accessible controls.
 - [ ] 5. Release readiness: edge cases, critical end-to-end coverage, visual review, and documentation.
 
@@ -71,8 +71,8 @@ contain multiple commits.
       times, deterministic finishing order, and domain tests.
 - [x] 3.2. Race lifecycle: shared state transitions, elapsed simulation time,
       sequential rounds, and completed-round results.
-- [ ] 3.3. Controls and results: Start, round status, result display, and
-      pause/resume if included.
+- [x] 3.3. Controls and results: Start, round status, result display, and
+      pause/resume.
 
 ### Step 3.1 acceptance criteria
 
@@ -102,7 +102,19 @@ contain multiple commits.
   invalid deltas, results, and equivalent progress across update sizes.
 - Do not introduce timers, controls, animations, or pause/resume in this step.
 
+### Step 3.3 acceptance criteria
+
+- Add guarded Pause/Resume actions without changing sampled speeds or losing progress.
+- Connect Start/Pause/Resume and disable Generate during running and paused states.
+- Drive races with a scoped requestAnimationFrame clock at approximately eight real
+  seconds per round, preserving remaining real time across changes of playback scale.
+- Exclude paused time and cancel pending frames on Pause, completion, and disposal.
+- Display round status and completed results with positions, names, and simulated
+  finish times rounded for display only.
+- Verify pause guards, clock scaling and cleanup, controls, incremental result display,
+  complete program execution, and narrow layouts.
+- Keep horse track animation and final visual design in milestone 4.
+
 The condition-speed relationship and coefficients are deliberate product decisions,
 with their rationale and outstanding confirmation recorded in docs/SPEC.md.
-Resolve pause/resume before implementing race controls, and visual direction
-before final interface styling.
+Resolve visual direction before final interface styling.

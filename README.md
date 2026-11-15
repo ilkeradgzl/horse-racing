@@ -6,8 +6,13 @@ A horse racing simulator built with Vue 3, TypeScript, and Pinia.
 
 The horse list shows the session's 20 horses, including their conditions and colors.
 Select **Generate schedule** to create six rounds with 10 participants each.
-Generating again replaces the schedule while keeping the horse list unchanged.
-Reloading the page creates a new roster.
+Select **Start** to run all six rounds in sequence, approximately eight real seconds
+per round. **Pause** freezes progress; **Resume** continues from the same point.
+Results appear after each round with simulated finish times, independently of playback speed.
+
+Schedule generation is disabled while running or paused. After completion,
+generate another schedule to clear results and prepare a new program; the horse
+list stays unchanged. Reloading the page creates a new roster.
 
 ## Setup
 
@@ -41,7 +46,8 @@ npm run dev
 
 - `src/main.ts`: creates the Vue app, registers Pinia, and mounts `App.vue`.
 - `src/App.vue`: application layout and schedule generation control.
-- `src/components/`: horse list and race schedule presentation.
+- `src/components/`: horse list, schedule, and completed results presentation.
+- `src/composables/useRaceClock.ts`: scoped playback clock and round-time scaling.
 - `src/stores/racing.ts`: session roster, schedule generation, race lifecycle,
   elapsed-time updates, and completed-round results.
 - `src/domain/horse.ts`: horse model and framework-independent roster generation.

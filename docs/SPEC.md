@@ -44,8 +44,8 @@
 - Show each round's distance and ordered participant names.
 - Keep the inspection interface responsive and usable by keyboard, with semantic
   table/list structure and a status announcement after generation.
-- Ignore schedule generation while running; the control will be disabled when race
-  controls are connected. After completion, generating a new schedule clears race
+- Disable schedule generation while running or paused; the store also ignores
+  generation calls in those states. After completion, generating a new schedule clears race
   progress and results while preserving the roster.
 
 ## Simulation model
@@ -131,7 +131,7 @@ finishTime = roundDistance / speed
 ## Race lifecycle
 
 - States: `idle` before generation, `ready` after generation, `running` after Start,
-  and `completed` after all six rounds finish.
+  `paused` while suspended, and `completed` after all six rounds finish.
 - `startRace()` starts only a ready schedule. Calls before generation, during
   execution, or after completion have no effect. A completed schedule requires a
   new Generate action before it can start again.
@@ -146,8 +146,39 @@ finishTime = roundDistance / speed
   rounds. No simulation time is lost when a clock update arrives late.
 - Preserve completed results in schedule order. After the sixth round, retain its
   final snapshot and finish-line progress; discard time beyond program completion.
-- The lifecycle owns no timers. A future presentation clock will call the update
-  action; pause/resume and playback speed remain separate decisions.
+- Pause is allowed only while running; Resume is allowed only while paused.
+  Repeated or invalid calls have no effect. Pausing preserves sampled speeds,
+  elapsed time, completed results, and the schedule; time updates are ignored
+  until Resume.
+- Transitions between rounds are immediate, so Pause applies to whichever round
+  is active when the action is processed.
+- The lifecycle owns no timers. A presentation composable supplies time updates.
+
+## Controls, playback, and result display
+
+- Show Generate schedule and Start initially; Start is disabled until a schedule is ready.
+- Label the race control Pause while running and Resume while paused. Keep the
+  same button mounted to preserve keyboard focus when its action changes.
+  Generate remains disabled in both states. After completion, Start is disabled
+  until another schedule is generated.
+- Display current round status and elapsed simulation seconds. Announce lifecycle
+  and round changes, without announcing elapsed time on every frame.
+- Each round plays in approximately eight real seconds, excluding pauses. Convert
+  real elapsed time to simulation time using the active round's total duration.
+  This is a selected presentation rule, not a change to horse performance or
+  simulated finish times; longer distances use a higher playback scale.
+- Use requestAnimationFrame timestamps. The first frame establishes the time
+  baseline; Resume starts a fresh baseline and excludes paused time.
+- If a delayed frame crosses a round boundary, consume only the real time needed
+  to finish it, then apply the remaining real time using the next round's scale.
+  A late update can complete several rounds in schedule order.
+- A running race catches up after a background-tab delay; it does not automatically
+  pause. Cancel pending frames on Pause, completion, or component disposal.
+- Show each completed round's results in a semantic table with position, horse
+  name, and simulated finish time in seconds to two decimal places. Ranking uses
+  unrounded values; identical displayed times can have different positions.
+- Keep completed results visible while later rounds run. Generating a new schedule
+  clears them. Horse track animation belongs to the racing interface milestone.
 
 ## Technical approach
 
@@ -162,12 +193,9 @@ finishTime = roundDistance / speed
 
 Resolve each decision before implementing the affected behavior.
 
-- Whether to support pause/resume and how it behaves between rounds.
 - Visual direction and the intended fidelity to the reference design.
 - Confirm the selected interpretation of condition as a speed advantage and the
   intended balance between condition and randomness; see the simulation model.
-- Animation playback speed.
-- Result presentation fields and time formatting.
 
 ## Outside current scope
 

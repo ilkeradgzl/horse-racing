@@ -317,3 +317,60 @@ describe('race lifecycle', () => {
     expect(store.status).toBe('running')
   })
 })
+
+describe('pause and resume', () => {
+  it('preserves race state while paused and resumes without new speed draws', () => {
+    const store = prepareRace()
+    store.startRace()
+    store.advanceRace(activeDuration(store) + 10)
+    const active = store.activeRound
+    const elapsed = store.elapsedSeconds
+    const results = store.completedRounds.map((round) => ({
+      ...round,
+      results: [...round.results],
+    }))
+    const rounds = store.rounds
+    const progress = store.progress
+    vi.mocked(Math.random).mockClear()
+
+    store.pauseRace()
+    store.pauseRace()
+    store.startRace()
+    store.generateProgram()
+    store.advanceRace(10000)
+
+    expect(store.status).toBe('paused')
+    expect(store.activeRound).toBe(active)
+    expect(store.elapsedSeconds).toBe(elapsed)
+    expect(store.rounds).toBe(rounds)
+    expect(store.completedRounds).toEqual(results)
+    expect(store.progress).toEqual(progress)
+    expect(Math.random).not.toHaveBeenCalled()
+
+    store.resumeRace()
+    store.resumeRace()
+    store.advanceRace(1)
+
+    expect(store.status).toBe('running')
+    expect(store.activeRound).toBe(active)
+    expect(store.elapsedSeconds).toBe(elapsed + 1)
+    expect(Math.random).not.toHaveBeenCalled()
+  })
+
+  it('ignores pause and resume outside their valid states', () => {
+    const store = useRacingStore()
+    store.pauseRace()
+    store.resumeRace()
+    expect(store.status).toBe('idle')
+    store.generateProgram()
+    store.pauseRace()
+    store.resumeRace()
+    expect(store.status).toBe('ready')
+    store.startRace()
+    store.advanceRace(10000)
+    store.pauseRace()
+    store.resumeRace()
+    expect(store.status).toBe('completed')
+    expect(store.completedRounds).toHaveLength(6)
+  })
+})

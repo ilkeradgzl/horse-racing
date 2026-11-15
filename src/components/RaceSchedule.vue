@@ -20,7 +20,7 @@ const scheduledRounds = computed(() => {
   <section aria-labelledby="schedule-heading">
     <div class="schedule-heading">
       <h2 id="schedule-heading">Race schedule</h2>
-      <p role="status">
+      <p role="status" aria-label="Schedule status">
         {{
           rounds.length ? `${rounds.length} rounds · 10 horses per round` : 'No schedule generated'
         }}

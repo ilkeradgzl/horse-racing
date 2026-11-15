@@ -9,7 +9,7 @@ import {
   type RoundSimulation,
 } from '@/domain/simulation'
 
-export type RacingStatus = 'idle' | 'ready' | 'running' | 'completed'
+export type RacingStatus = 'idle' | 'ready' | 'running' | 'paused' | 'completed'
 
 export interface CompletedRound {
   readonly roundNumber: number
@@ -30,7 +30,7 @@ export const useRacingStore = defineStore('racing', () => {
   )
 
   function generateProgram() {
-    if (status.value === 'running') return
+    if (status.value === 'running' || status.value === 'paused') return
 
     rounds.value = generateSchedule(horses.value)
     activeRound.value = null
@@ -48,6 +48,14 @@ export const useRacingStore = defineStore('racing', () => {
     activeRound.value = createRoundSimulation(firstRound, horses.value)
     elapsedSeconds.value = 0
     status.value = 'running'
+  }
+
+  function pauseRace() {
+    if (status.value === 'running') status.value = 'paused'
+  }
+
+  function resumeRace() {
+    if (status.value === 'paused') status.value = 'running'
   }
 
   /** Advance by simulation seconds since the last update, carrying time across rounds. */
@@ -96,6 +104,8 @@ export const useRacingStore = defineStore('racing', () => {
     progress,
     generateProgram,
     startRace,
+    pauseRace,
+    resumeRace,
     advanceRace,
   }
 })
