@@ -42,7 +42,8 @@ npm run dev
 - `src/main.ts`: creates the Vue app, registers Pinia, and mounts `App.vue`.
 - `src/App.vue`: application layout and schedule generation control.
 - `src/components/`: horse list and race schedule presentation.
-- `src/stores/racing.ts`: session roster, schedule state, and generation action.
+- `src/stores/racing.ts`: session roster, schedule generation, race lifecycle,
+  elapsed-time updates, and completed-round results.
 - `src/domain/horse.ts`: horse model and framework-independent roster generation.
 - `src/domain/schedule.ts`: round model and six-round schedule generation.
 - `src/domain/simulation.ts`: single-round speed sampling, elapsed-time progress, and finishing results.

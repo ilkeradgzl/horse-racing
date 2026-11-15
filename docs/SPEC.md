@@ -44,7 +44,9 @@
 - Show each round's distance and ordered participant names.
 - Keep the inspection interface responsive and usable by keyboard, with semantic
   table/list structure and a status announcement after generation.
-- Generation behavior during and after race execution remains undecided.
+- Ignore schedule generation while running; the control will be disabled when race
+  controls are connected. After completion, generating a new schedule clears race
+  progress and results while preserving the roster.
 
 ## Simulation model
 
@@ -126,6 +128,27 @@ finishTime = roundDistance / speed
   distance exactly to the finish line to avoid floating-point crossing ambiguity.
 - Keep timers, Pinia lifecycle, controls, and animations outside the domain API.
 
+## Race lifecycle
+
+- States: `idle` before generation, `ready` after generation, `running` after Start,
+  and `completed` after all six rounds finish.
+- `startRace()` starts only a ready schedule. Calls before generation, during
+  execution, or after completion have no effect. A completed schedule requires a
+  new Generate action before it can start again.
+- Keep one active round snapshot, its elapsed simulation seconds, and completed
+  round results. Sample participant speeds only when a round starts.
+- `advanceRace(deltaSeconds)` accepts finite, non-negative simulation seconds since
+  the last update. Valid updates outside the running state have no effect;
+  invalid deltas are rejected without changing state.
+- Finish each round when its slowest horse crosses the line, record its results
+  once, and start the next round immediately. No inter-round delay is included.
+- Carry unused time from an update into the next round, including across several
+  rounds. No simulation time is lost when a clock update arrives late.
+- Preserve completed results in schedule order. After the sixth round, retain its
+  final snapshot and finish-line progress; discard time beyond program completion.
+- The lifecycle owns no timers. A future presentation clock will call the update
+  action; pause/resume and playback speed remain separate decisions.
+
 ## Technical approach
 
 - Vue 3, TypeScript, Vite, and Pinia.
@@ -141,10 +164,9 @@ Resolve each decision before implementing the affected behavior.
 
 - Whether to support pause/resume and how it behaves between rounds.
 - Visual direction and the intended fidelity to the reference design.
-- Behavior of Generate during and after races.
 - Confirm the selected interpretation of condition as a speed advantage and the
   intended balance between condition and randomness; see the simulation model.
-- Animation playback speed and transitions between rounds.
+- Animation playback speed.
 - Result presentation fields and time formatting.
 
 ## Outside current scope

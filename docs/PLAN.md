@@ -69,7 +69,7 @@ contain multiple commits.
 
 - [x] 3.1. Single-round simulation: condition-weighted speeds, progress, finish
       times, deterministic finishing order, and domain tests.
-- [ ] 3.2. Race lifecycle: shared state transitions, elapsed simulation time,
+- [x] 3.2. Race lifecycle: shared state transitions, elapsed simulation time,
       sequential rounds, and completed-round results.
 - [ ] 3.3. Controls and results: Start, round status, result display, and
       pause/resume if included.
@@ -88,7 +88,21 @@ contain multiple commits.
   with deterministic tests rather than probabilistic pass/fail thresholds.
 - Do not introduce controls, animation, or race lifecycle integration in this step.
 
+### Step 3.2 acceptance criteria
+
+- Add idle, ready, running, and completed states to the Pinia store.
+- Start a ready schedule once; ignore invalid or duplicate Start calls.
+- Track active-round progress and retain completed results in schedule order.
+- Advance from externally supplied simulation-time deltas, carrying excess time
+  across immediate round transitions without resampling an active round.
+- Finish only after all six rounds; keep the final round at the finish line.
+- Block generation while running. Generation after completion clears race state
+  while retaining the roster; a new schedule is required before another Start.
+- Verify state transitions, partial finishes, exact boundaries, late updates,
+  invalid deltas, results, and equivalent progress across update sizes.
+- Do not introduce timers, controls, animations, or pause/resume in this step.
+
 The condition-speed relationship and coefficients are deliberate product decisions,
 with their rationale and outstanding confirmation recorded in docs/SPEC.md.
-Resolve pause/resume and regeneration during execution before implementing race
-controls, and visual direction before final interface styling.
+Resolve pause/resume before implementing race controls, and visual direction
+before final interface styling.
