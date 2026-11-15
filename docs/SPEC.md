@@ -23,6 +23,17 @@
 - Each generation returns a new roster with new horse objects.
 - Roster generation timing and schedule regeneration behavior remain pending.
 
+## Race schedule
+
+- A schedule contains six rounds, numbered 1 through 6, in distance order.
+- Each round stores its distance in meters and an ordered list of 10 horse IDs.
+  The list is the participant order, not a predicted finishing order.
+- Select participants uniformly without replacement within each round. Start each
+  round's selection from the full roster; participation is not balanced across rounds.
+- Require exactly 20 horses with unique IDs; reject invalid rosters with an error.
+- Reference horses by ID rather than duplicating their names, colors, and conditions.
+- Generation leaves the input roster unchanged and returns new rounds and participant arrays.
+
 ## Technical approach
 
 - Vue 3, TypeScript, Vite, and Pinia.

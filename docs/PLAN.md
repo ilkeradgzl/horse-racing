@@ -27,7 +27,7 @@ contain multiple commits.
 
 - [x] 2.1. Horse generation: domain type, fixed color palette, random conditions,
       and deterministic unit tests.
-- [ ] 2.2. Schedule generation: six rounds, required distances, distinct random
+- [x] 2.2. Schedule generation: six rounds, required distances, distinct random
       participants within each round, and focused unit tests.
 - [ ] 2.3. Vue integration: Pinia state, Generate control, horse list, and schedule display.
 
@@ -41,6 +41,18 @@ contain multiple commits.
 - Return fresh arrays and horse objects on every call.
 - Verify generation rules, condition boundaries, and roster independence.
 - Do not introduce schedule generation, shared state, or UI integration.
+
+### Step 2.2 acceptance criteria
+
+- Generate six rounds, numbered 1 through 6, at 1200, 1400, 1600, 1800, 2000,
+  and 2200 meters in that order.
+- Select 10 distinct roster members per round, referencing horses by ID.
+- Sample each round independently from the complete roster without mutating it.
+- Reject rosters that do not contain exactly 20 horses with unique IDs.
+- Keep generation framework-independent, with an injectable random source.
+- Verify distances, participant membership and uniqueness, repeat participation,
+  input preservation, independent outputs, and invalid rosters.
+- Do not introduce Pinia state, race execution, or UI integration.
 
 Before step 2.3, define when horses are generated and how schedule regeneration
 behaves. Condition/performance modeling belongs to milestone 3. Resolve
