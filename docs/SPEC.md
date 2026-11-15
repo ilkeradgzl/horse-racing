@@ -46,6 +46,67 @@
   table/list structure and a status announcement after generation.
 - Generation behavior during and after race execution remains undecided.
 
+## Simulation model (selected for implementation)
+
+### Product interpretation and confirmation
+
+The defined condition range is 1 to 100; its effect on racing performance is
+unspecified. The selected product interpretation is that higher condition improves
+expected speed, while independent round-level randomness permits upsets. This is
+a deliberate product decision, not an explicit requirement or a physiological model.
+
+Confirm whether condition is intended to affect speed and whether the selected
+advantage is appropriate. Until that interpretation changes, use the model below.
+
+### Speed and outcome rules
+
+For each participant, draw an independent uniform random value `u` in `[0, 1)`
+once at the start of each round:
+
+```text
+speed = 12 + 4 * (condition / 100) + 5 * u
+```
+
+- Speed is measured in simulated meters per second and remains constant for the round.
+- Draw again in each new round; horse condition remains unchanged.
+- The baseline of 12 controls simulated durations and relative visual separation.
+  It does not affect finishing order. It is a tuning value, not a measured constant.
+- The condition coefficient of 4 gives higher-condition horses a consistent advantage.
+- The random range of 5 exceeds the largest condition contribution difference,
+  `4 * (100 - 1) / 100 = 3.96`. Therefore no horse is mathematically excluded
+  from winning solely because of its condition, including against a full field.
+- This guarantees possibility, not frequent upsets. Winning against nine opponents
+  is less likely than beating one; no fixed full-field win probability is promised.
+- Constant speeds mean there is no overtaking after the start. Pace variation,
+  acceleration, and fatigue are outside this initial model.
+
+For a higher/lower-condition pair with condition difference `d`, the lower-condition
+horse's head-to-head win probability under independent uniform draws is:
+
+```text
+P(upset) = 0.5 * (1 - (4 * d / 100) / 5)^2
+```
+
+Examples: condition 10 beats condition 90 with probability 6.48%; condition 1
+beats condition 100 with probability 2.1632%. Equal conditions have equal chances.
+These are mathematical pairwise probabilities, not empirical measurements or
+probabilities of winning a ten-horse round. The coefficients express a chosen
+balance between favorites and upsets; there is no unique optimal balance without
+a target win rate or gameplay feedback.
+
+Calculate progress and results from elapsed simulation time:
+
+```text
+distanceTravelled = min(roundDistance, speed * elapsedSeconds)
+finishTime = roundDistance / speed
+```
+
+- Clamp progress at the finish line and order results by unrounded finish time.
+- Break exact ties using the original participant order.
+- A round completes when all 10 participants have finished.
+- Keep simulation time separate from animation playback speed; presentation timing
+  remains a later decision. Animation frame rate must not affect results.
+
 ## Technical approach
 
 - Vue 3, TypeScript, Vite, and Pinia.
@@ -62,10 +123,10 @@ Resolve each decision before implementing the affected behavior.
 - Whether to support pause/resume and how it behaves between rounds.
 - Visual direction and the intended fidelity to the reference design.
 - Behavior of Generate during and after races.
-- How condition affects performance. Proposed: higher condition improves expected
-  performance, while randomness allows upsets. The formula remains undecided.
-- Race duration, distance scaling, and transitions between rounds.
-- Tie handling and the precise result fields.
+- Confirm the selected interpretation of condition as a speed advantage and the
+  intended balance between condition and randomness; see the simulation model.
+- Animation playback speed and transitions between rounds.
+- Result presentation fields and time formatting.
 
 ## Outside current scope
 

@@ -65,6 +65,30 @@ contain multiple commits.
   rendering, and the browser generation flow.
 - Do not add Start/Pause controls, race execution, animation, or results.
 
-Condition/performance modeling belongs to milestone 3. Resolve pause/resume and
-regeneration during execution before implementing race controls, and visual
-direction before final interface styling.
+## Milestone 3: race execution
+
+- [ ] 3.1. Single-round simulation: condition-weighted speeds, progress, finish
+      times, deterministic finishing order, and domain tests.
+- [ ] 3.2. Race lifecycle: shared state transitions, elapsed simulation time,
+      sequential rounds, and completed-round results.
+- [ ] 3.3. Controls and results: Start, round status, result display, and
+      pause/resume if included.
+
+### Step 3.1 acceptance criteria
+
+- Implement the selected simulation rules in docs/SPEC.md as framework-independent TypeScript.
+- Sample each participant's speed once per round using an injectable random source.
+- Favor higher condition with equal random draws; permit a condition-1 horse to
+  beat a condition-100 horse with suitable draws.
+- Derive progress and finish times from elapsed simulation time without timers or animation.
+- Cap distance at the finish line, rank by unrounded finish times, and use participant
+  order to break exact ties.
+- Complete the round only after every participant finishes.
+- Verify boundary conditions, upsets, ranking, ties, and frame-rate-independent progress
+  with deterministic tests rather than probabilistic pass/fail thresholds.
+- Do not introduce controls, animation, or race lifecycle integration in this step.
+
+The condition-speed relationship and coefficients are deliberate product decisions,
+with their rationale and outstanding confirmation recorded in docs/SPEC.md.
+Resolve pause/resume and regeneration during execution before implementing race
+controls, and visual direction before final interface styling.
