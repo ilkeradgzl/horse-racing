@@ -2,6 +2,8 @@
 
 A horse racing simulator built with Vue 3, TypeScript, and Pinia.
 
+[Open the live app](https://horse-racing-nine-mu.vercel.app/)
+
 ## Usage
 
 The horse list shows the session's 20 horses, including their conditions and colors.
@@ -81,6 +83,14 @@ condition interpretation that remains open to product confirmation.
 `npm run build` produces static assets in `dist/`. Serve that directory from a
 static host at the domain root. The app requires no backend, environment variables,
 or persisted storage. For a local check, run `npm run preview` after building.
+
+The application is hosted on Vercel, connected to `ilkeradgzl/horse-racing` on
+GitHub. Pushes to `main` trigger production deployments using the Vite preset,
+`npm run build`, and the `dist/` output directory. Run the verification commands
+before pushing; deployment builds do not run the test suite.
+
+After deployment, check schedule generation, Start/Pause/Resume, all six rounds
+and their results, and the narrow-screen layout on the live URL.
 
 ## Project guide
 
