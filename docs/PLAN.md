@@ -3,7 +3,7 @@
 ## Milestones
 
 - [x] 1. Application foundation: Vue, TypeScript, Pinia, development tooling, and documentation.
-- [ ] 2. Horse and schedule generation: domain rules, focused unit tests, and a minimal inspection interface.
+- [x] 2. Horse and schedule generation: domain rules, focused unit tests, and a minimal inspection interface.
 - [ ] 3. Race execution: simulation, shared lifecycle, sequential rounds, and results.
 - [ ] 4. Racing interface: animated track, responsive layout, and accessible controls.
 - [ ] 5. Release readiness: edge cases, critical end-to-end coverage, visual review, and documentation.
@@ -29,7 +29,7 @@ contain multiple commits.
       and deterministic unit tests.
 - [x] 2.2. Schedule generation: six rounds, required distances, distinct random
       participants within each round, and focused unit tests.
-- [ ] 2.3. Vue integration: Pinia state, Generate control, horse list, and schedule display.
+- [x] 2.3. Vue integration: Pinia state, Generate control, horse list, and schedule display.
 
 ### Step 2.1 acceptance criteria
 
@@ -54,7 +54,17 @@ contain multiple commits.
   input preservation, independent outputs, and invalid rosters.
 - Do not introduce Pinia state, race execution, or UI integration.
 
-Before step 2.3, define when horses are generated and how schedule regeneration
-behaves. Condition/performance modeling belongs to milestone 3. Resolve
-pause/resume before implementing race controls, and visual direction before
-interface styling.
+### Step 2.3 acceptance criteria
+
+- Initialize a session roster in one Pinia store; begin with an empty schedule.
+- Generate and replace six rounds through a store action without changing horse data.
+- Display the roster in a semantic table and rounds with participant names in lists.
+- Keep presentation components separate from domain generation and shared state.
+- Support keyboard generation, status announcements, and narrow viewports.
+- Verify store initialization, schedule replacement, roster stability, component
+  rendering, and the browser generation flow.
+- Do not add Start/Pause controls, race execution, animation, or results.
+
+Condition/performance modeling belongs to milestone 3. Resolve pause/resume and
+regeneration during execution before implementing race controls, and visual
+direction before final interface styling.

@@ -21,7 +21,9 @@
 - IDs, names, and colors remain consistent across generated rosters.
 - Generate each condition independently as a random integer from 1 to 100 inclusive.
 - Each generation returns a new roster with new horse objects.
-- Roster generation timing and schedule regeneration behavior remain pending.
+- Create the roster when the application initializes its racing store. Keep horse
+  identities, colors, and conditions unchanged for that application session.
+- Reloading the page creates a new roster; no data is persisted.
 
 ## Race schedule
 
@@ -33,6 +35,16 @@
 - Require exactly 20 horses with unique IDs; reject invalid rosters with an error.
 - Reference horses by ID rather than duplicating their names, colors, and conditions.
 - Generation leaves the input roster unchanged and returns new rounds and participant arrays.
+
+## Schedule interaction
+
+- Show the 20-horse roster immediately, with no schedule selected initially.
+- Generate schedule creates all six rounds using the current roster.
+- Generating again replaces the entire schedule without changing horse data.
+- Show each round's distance and ordered participant names.
+- Keep the inspection interface responsive and usable by keyboard, with semantic
+  table/list structure and a status announcement after generation.
+- Generation behavior during and after race execution remains undecided.
 
 ## Technical approach
 
@@ -49,7 +61,7 @@ Resolve each decision before implementing the affected behavior.
 
 - Whether to support pause/resume and how it behaves between rounds.
 - Visual direction and the intended fidelity to the reference design.
-- Horse generation timing and behavior of Generate before, during, and after races.
+- Behavior of Generate during and after races.
 - How condition affects performance. Proposed: higher condition improves expected
   performance, while randomness allows upsets. The formula remains undecided.
 - Race duration, distance scaling, and transitions between rounds.
