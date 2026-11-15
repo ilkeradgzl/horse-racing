@@ -189,8 +189,8 @@ repository setting.
       generated mobile, and completed desktop.
 - [x] Keep test data and race timing deterministic without application changes.
 - [x] Include visual comparisons in CI and provide an explicit manual baseline-generation mode.
-- [ ] Review and commit Linux baselines generated on Ubuntu 24.04.
-- [ ] Confirm the hosted comparisons pass against the reviewed Linux baselines.
+- [x] Review and commit Linux baselines generated on Ubuntu 24.04.
+- [x] Confirm the hosted comparisons pass against the reviewed Linux baselines.
 
 Keep platform-specific approved images under version control. Intentional design
 changes require reviewing image differences and updating the affected baselines.
