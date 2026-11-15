@@ -171,5 +171,17 @@ contain multiple commits.
 - Confirm passing unit/component tests, production-build browser tests, type checking,
   linting, formatting, and production dependency audit results.
 
+## Continuous integration
+
+- [x] Add one GitHub Actions workflow for pushes and pull requests targeting `main`.
+- [x] Use Node.js 24, lockfile-based installation, and existing quality commands.
+- [x] Run all three browser projects against the production build, including type checking.
+- [x] Retain browser reports for diagnosis and cancel superseded runs on the same ref.
+- [ ] Confirm the first hosted workflow run after review and push.
+
+The workflow uses read-only repository permissions and no deployment secrets.
+CI and Vercel deployment remain independent; branch protection is a separate
+repository setting.
+
 The condition-speed relationship and coefficients are deliberate product decisions,
 with their rationale and outstanding confirmation recorded in docs/SPEC.md.

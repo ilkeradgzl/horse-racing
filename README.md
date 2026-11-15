@@ -69,6 +69,18 @@ generation, race completion, pause/resume, round transitions, keyboard navigatio
 narrow layouts, and reduced motion across Chromium, Firefox, and WebKit.
 Domain tests use controlled random draws to verify ranking, ties, and upsets.
 
+### Continuous integration
+
+The [CI workflow](.github/workflows/ci.yml) runs on pushes to `main` and pull
+requests targeting `main`. One Ubuntu job uses Node.js 24 and `npm ci`, then runs
+linting, formatting, unit/component tests, and production-build browser tests.
+The browser step includes type checking and the build. Playwright reports are
+available as workflow artifacts for seven days, including when browser tests fail.
+
+Vercel deployments and CI run independently. A failing workflow does not block
+deployment; review checks before merging a pull request. Requiring the
+**Quality checks** status before merging needs a repository branch rule.
+
 ## Simulation decisions
 
 Higher condition improves expected speed, while independent randomness allows
