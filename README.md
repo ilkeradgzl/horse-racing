@@ -50,10 +50,42 @@ npm run dev
 its own production preview server on port 4173. Keep that port available; tests
 do not reuse an existing server, so they always exercise a fresh build.
 
+## Verification
+
+Run the release checks from the project root:
+
+```sh
+npm run lint
+npm run format:check
+npm run test:unit -- --run
+npm run test:e2e
+npm audit --omit=dev
+```
+
+The browser command includes type checking and the production build. Tests cover
+generation, race completion, pause/resume, round transitions, keyboard navigation,
+narrow layouts, and reduced motion across Chromium, Firefox, and WebKit.
+Domain tests use controlled random draws to verify ranking, ties, and upsets.
+
+## Simulation decisions
+
+Higher condition improves expected speed, while independent randomness allows
+lower-condition horses to win. Each horse keeps a constant speed within a round;
+there is no acceleration, overtaking, or fatigue. The eight-second playback scales
+the viewing duration without changing simulated finish times or ranking.
+The [specification](docs/SPEC.md#simulation-model) records the formula and the
+condition interpretation that remains open to product confirmation.
+
+## Production build
+
+`npm run build` produces static assets in `dist/`. Serve that directory from a
+static host at the domain root. The app requires no backend, environment variables,
+or persisted storage. For a local check, run `npm run preview` after building.
+
 ## Project guide
 
 - `src/main.ts`: creates the Vue app, registers Pinia, and mounts `App.vue`.
-- `src/App.vue`: application layout and schedule generation control.
+- `src/App.vue`: application layout, race controls, status, and playback integration.
 - `src/components/`: horse list, animated track, schedule, and completed results presentation.
 - `src/components/HorseIcon.vue`: decorative SVG artwork that inherits its color from the parent.
 - `src/composables/useRaceClock.ts`: scoped playback clock and round-time scaling.
@@ -64,6 +96,8 @@ do not reuse an existing server, so they always exercise a fresh build.
 - `src/domain/simulation.ts`: single-round speed sampling, elapsed-time progress, and finishing results.
 - `src/domain/__tests__/`: deterministic domain unit tests.
 - `src/__tests__/`: component tests using Vue Test Utils and Vitest.
+- `src/composables/__tests__/`: playback timing and cleanup tests.
+- `src/stores/__tests__/`: shared lifecycle and state-transition tests.
 - `e2e/`: Playwright browser tests.
 - [Specification](docs/SPEC.md): requirements, decisions, and open questions.
 - [Plan](docs/PLAN.md): milestone scope and progress.

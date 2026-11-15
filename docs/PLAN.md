@@ -6,7 +6,7 @@
 - [x] 2. Horse and schedule generation: domain rules, focused unit tests, and a minimal inspection interface.
 - [x] 3. Race execution: simulation, shared lifecycle, sequential rounds, and results.
 - [x] 4. Racing interface: animated track, responsive layout, and accessible controls.
-- [ ] 5. Release readiness: edge cases, critical end-to-end coverage, visual review, and documentation.
+- [x] 5. Release readiness: edge cases, critical end-to-end coverage, visual review, and documentation.
 
 Define detailed scope and acceptance criteria before starting each milestone.
 Track unresolved behavior in [the specification](SPEC.md).
@@ -151,7 +151,7 @@ contain multiple commits.
       production-build browser behavior, and dependency advisories.
 - [x] 5.2. Audit follow-ups: make production-build browser verification repeatable,
       reconcile specification wording, and document remaining dependency limitations.
-- [ ] 5.3. Final review: confirm documentation, verification results, and known limitations.
+- [x] 5.3. Final review: confirm documentation, verification results, and known limitations.
 
 ### Step 5.2 acceptance criteria
 
@@ -161,6 +161,15 @@ contain multiple commits.
 - Keep the specification aligned with implemented playback and track behavior.
 - Review compatible dependency fixes; document advisories that require upstream changes.
 - Preserve application behavior and verify unit tests, linting, formatting, and browser tests.
+
+### Step 5.3 acceptance criteria
+
+- Document setup, repeatable release checks, static build output, and runtime requirements.
+- Keep the project guide consistent with application, store, and clock responsibilities.
+- Make simulation assumptions and outstanding product confirmation easy to find.
+- Retain the documented development-dependency advisories as a maintenance limitation.
+- Confirm passing unit/component tests, production-build browser tests, type checking,
+  linting, formatting, and production dependency audit results.
 
 The condition-speed relationship and coefficients are deliberate product decisions,
 with their rationale and outstanding confirmation recorded in docs/SPEC.md.
