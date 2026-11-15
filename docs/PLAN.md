@@ -67,7 +67,7 @@ contain multiple commits.
 
 ## Milestone 3: race execution
 
-- [ ] 3.1. Single-round simulation: condition-weighted speeds, progress, finish
+- [x] 3.1. Single-round simulation: condition-weighted speeds, progress, finish
       times, deterministic finishing order, and domain tests.
 - [ ] 3.2. Race lifecycle: shared state transitions, elapsed simulation time,
       sequential rounds, and completed-round results.

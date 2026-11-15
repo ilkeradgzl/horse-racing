@@ -45,6 +45,7 @@ npm run dev
 - `src/stores/racing.ts`: session roster, schedule state, and generation action.
 - `src/domain/horse.ts`: horse model and framework-independent roster generation.
 - `src/domain/schedule.ts`: round model and six-round schedule generation.
+- `src/domain/simulation.ts`: single-round speed sampling, elapsed-time progress, and finishing results.
 - `src/domain/__tests__/`: deterministic domain unit tests.
 - `src/__tests__/`: component tests using Vue Test Utils and Vitest.
 - `e2e/`: Playwright browser tests.

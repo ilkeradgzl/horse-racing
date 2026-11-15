@@ -46,7 +46,7 @@
   table/list structure and a status announcement after generation.
 - Generation behavior during and after race execution remains undecided.
 
-## Simulation model (selected for implementation)
+## Simulation model
 
 ### Product interpretation and confirmation
 
@@ -106,6 +106,25 @@ finishTime = roundDistance / speed
 - A round completes when all 10 participants have finished.
 - Keep simulation time separate from animation playback speed; presentation timing
   remains a later decision. Animation frame rate must not affect results.
+
+### Domain API
+
+- `createRoundSimulation(round, horses, random?)` captures participant IDs, sampled
+  speeds, and unrounded finish times in starting order. It does not retain horse
+  objects or the mutable schedule. Randomness defaults to Math.random.
+- Require a finite positive distance, 10 distinct participants present in a roster
+  with unique IDs, and integer participant conditions from 1 to 100. Invalid
+  inputs are rejected before sampling speeds.
+- `getRoundProgress(simulation, elapsedSeconds)` returns distances, per-horse
+  finish status, round completion, and results. Results remain empty until the
+  whole round completes; completed results include horse ID, position, and
+  unrounded finish time in simulation seconds.
+- Elapsed time is total simulation seconds since the round started, not a frame
+  delta. Require finite, non-negative input; identical inputs yield identical
+  progress regardless of earlier reads.
+- A horse finishes when elapsed time reaches its calculated finish time; set its
+  distance exactly to the finish line to avoid floating-point crossing ambiguity.
+- Keep timers, Pinia lifecycle, controls, and animations outside the domain API.
 
 ## Technical approach
 
