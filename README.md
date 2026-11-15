@@ -12,6 +12,9 @@ The track previews the first round after generation, then shows colored horses
 moving through ten lanes. Positions freeze on Pause and reset for each new round.
 Results appear after each round with simulated finish times, independently of playback speed.
 Reduced-motion preferences hide moving indicators while preserving distances and results.
+Controls remain visible while scrolling. On small screens, the active race appears
+before results, the schedule, and the supporting roster. Keyboard users can use
+**Skip to race** to focus the race workspace.
 
 Schedule generation is disabled while running or paused. After completion,
 generate another schedule to clear results and prepare a new program; the horse

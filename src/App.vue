@@ -37,6 +37,7 @@ function handleRaceControl() {
 </script>
 
 <template>
+  <a class="skip-link" href="#race-heading">Skip to race</a>
   <main class="app-shell">
     <header class="app-header">
       <div>
@@ -63,10 +64,9 @@ function handleRaceControl() {
     </header>
 
     <div class="dashboard">
-      <HorseList :horses="horses" />
-      <div class="race-workspace">
+      <section id="race-workspace" class="race-workspace" aria-label="Race workspace">
         <section class="panel panel-heading race-status" aria-labelledby="race-heading">
-          <h2 id="race-heading">Race status</h2>
+          <h2 id="race-heading" tabindex="-1">Race status</h2>
           <p role="status" aria-label="Race status">{{ raceStatus }}</p>
           <p v-if="activeRound">
             {{ activeRound.distance }} m ·
@@ -75,8 +75,13 @@ function handleRaceControl() {
           <p>Each round plays in approximately 8 seconds, excluding pauses.</p>
         </section>
         <RaceTrack :round="displayedRound" :horses="horses" :progress="progress" />
-        <RaceSchedule :rounds="rounds" :horses="horses" />
+      </section>
+      <div class="program-panels">
         <RaceResults :completed-rounds="completedRounds" :horses="horses" />
+        <RaceSchedule :rounds="rounds" :horses="horses" />
+      </div>
+      <div class="roster-panel">
+        <HorseList :horses="horses" />
       </div>
     </div>
   </main>
@@ -84,17 +89,42 @@ function handleRaceControl() {
 
 <style scoped>
 .app-shell {
-  max-width: 90rem;
+  max-width: 96rem;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0 2rem 2rem;
+}
+
+.skip-link {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 20;
+  transform: translateY(-200%);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background: #166534;
+  color: white;
+}
+
+.skip-link:focus,
+.skip-link:hover {
+  transform: translateY(0);
+  outline: 3px solid #2563eb;
+  outline-offset: 3px;
 }
 
 .app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid #cbd5e1;
+  background: #f1f5f9;
 }
 
 h1 {
@@ -109,6 +139,7 @@ h1 {
 }
 
 button {
+  min-height: 2.75rem;
   border: 0;
   border-radius: 0.6rem;
   padding: 0.9rem 1.25rem;
@@ -150,9 +181,31 @@ button:disabled {
 }
 
 .race-workspace {
+  grid-area: race;
+  display: grid;
+  min-width: 0;
+  gap: 1.25rem;
+}
+
+#race-heading {
+  scroll-margin-top: 12rem;
+}
+
+#race-heading:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 5px;
+}
+
+.program-panels {
+  grid-area: program;
   display: grid;
   min-width: 0;
   gap: 2rem;
+}
+
+.roster-panel {
+  grid-area: roster;
+  min-width: 0;
 }
 
 .race-status {
@@ -162,6 +215,7 @@ button:disabled {
 .dashboard {
   display: grid;
   grid-template-columns: 21rem minmax(0, 1fr);
+  grid-template-areas: 'roster race' 'program program';
   align-items: start;
   gap: 2rem;
 }
@@ -169,12 +223,26 @@ button:disabled {
 @media (max-width: 60rem) {
   .dashboard {
     grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'race' 'program' 'roster';
   }
 }
 
 @media (max-width: 36rem) {
   .app-shell {
-    padding: 1.25rem;
+    padding: 0 1.25rem 1.25rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .app-header p {
+    display: none;
+  }
+
+  .app-header {
+    padding: 0.75rem 0;
+    gap: 0.75rem;
   }
 
   .controls button {

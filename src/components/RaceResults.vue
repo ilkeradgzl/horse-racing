@@ -72,7 +72,7 @@ const horseNames = computed(() => new Map(props.horses.map((horse) => [horse.id,
 
 .results-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
   padding: 0;
   list-style: none;
@@ -99,5 +99,26 @@ thead th {
 
 tbody th {
   font-weight: 500;
+}
+
+tbody tr:first-child {
+  background: #f0fdf4;
+}
+
+tbody tr:first-child td:first-child {
+  color: #166534;
+  font-weight: 700;
+}
+
+@media (max-width: 60rem) {
+  .results-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 36rem) {
+  .results-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 </style>

@@ -76,7 +76,7 @@ const scheduledRounds = computed(() => {
 
 .rounds {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
   margin: 0;
   padding: 0;
@@ -114,5 +114,16 @@ const scheduledRounds = computed(() => {
   width: 0.65rem;
   height: 0.65rem;
   margin: 0 0.5rem;
+}
+@media (max-width: 60rem) {
+  .rounds {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 36rem) {
+  .rounds {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 </style>

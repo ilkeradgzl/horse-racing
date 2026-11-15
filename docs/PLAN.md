@@ -5,7 +5,7 @@
 - [x] 1. Application foundation: Vue, TypeScript, Pinia, development tooling, and documentation.
 - [x] 2. Horse and schedule generation: domain rules, focused unit tests, and a minimal inspection interface.
 - [x] 3. Race execution: simulation, shared lifecycle, sequential rounds, and results.
-- [ ] 4. Racing interface: animated track, responsive layout, and accessible controls.
+- [x] 4. Racing interface: animated track, responsive layout, and accessible controls.
 - [ ] 5. Release readiness: edge cases, critical end-to-end coverage, visual review, and documentation.
 
 Define detailed scope and acceptance criteria before starting each milestone.
@@ -119,7 +119,7 @@ contain multiple commits.
 
 - [x] 4.1. Animated track: preview, ten participant lanes, simulation-driven horse
       movement, pause and finish states, responsive bounds, and reduced motion.
-- [ ] 4.2. Interface polish: review dashboard arrangement, responsive hierarchy,
+- [x] 4.2. Interface polish: review dashboard arrangement, responsive hierarchy,
       visual consistency, and accessibility across the complete experience.
 
 ### Step 4.1 acceptance criteria
@@ -133,6 +133,17 @@ contain multiple commits.
 - Provide lane names, distances, and accessible progress descriptions.
 - Support a 320px viewport and reduced-motion preferences.
 - Verify position mapping, round changes, pause/resume, finish states, and browser movement.
+
+### Step 4.2 acceptance criteria
+
+- Prioritize race status and the track before supporting data on narrow screens.
+- Keep controls reachable while scrolling, without obscuring keyboard navigation.
+- Show results before the complete schedule; preserve all roster, schedule, and result data.
+- Use consistent card spacing and readable tables at desktop, tablet, and 320px widths.
+- Provide a skip link to the race heading with visible focus, native anchor navigation, CSS header clearance,
+  and stable repeated keyboard/pointer activation in empty and generated states.
+- Review running, paused, completed, and reduced-motion views in the browser.
+- Do not change simulation rules, timing, shared state, or product scope.
 
 The condition-speed relationship and coefficients are deliberate product decisions,
 with their rationale and outstanding confirmation recorded in docs/SPEC.md.

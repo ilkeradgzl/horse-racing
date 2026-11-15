@@ -93,7 +93,9 @@ describe('App', () => {
     )
     await wrapper.vm.$nextTick()
     expect(wrapper.findAll('[aria-label="Completed rounds"] > li')).toHaveLength(1)
-    expect(wrapper.get('table caption').text()).toBe('Available horses')
+    expect(wrapper.findAll('caption').map((caption) => caption.text())).toContain(
+      'Available horses',
+    )
     const resultRows = wrapper.findAll('[aria-label="Completed rounds"] tbody tr')
     expect(resultRows).toHaveLength(10)
     expect(resultRows[0]?.text()).toContain(

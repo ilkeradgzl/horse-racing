@@ -199,6 +199,25 @@ finishTime = roundDistance / speed
 - Respect reduced motion by hiding the moving indicators while preserving visible
   distances, accessible progress values, and race results.
 
+## Responsive layout and navigation
+
+- Keep race controls visible in a sticky header while scrolling.
+- Provide a visible-on-focus skip link to the race status heading, including before
+  generation when the workspace contains its empty state. It navigates content;
+  it does not skip a race round.
+- Use a native anchor to a focusable heading, with CSS scroll margin to clear the
+  sticky header. Preserve native link behavior: Enter or a pointer click activates
+  it; Space scrolls the page. No custom scrolling or keyboard handlers are needed.
+- Repeated activation must return to the same heading without drifting down the
+  page. Support keyboard and pointer activation in short viewports.
+- Prioritize race status and track in document order. On narrow screens, place
+  results and the schedule next, followed by the supporting horse roster.
+- On wide screens, place the roster beside the race workspace and the results
+  and schedule below. Preserve a consistent results-before-schedule reading order.
+- Use three round cards per row on wide screens, two on tablets, and one on phones.
+  Keep table contents readable without horizontal page scrolling at 320px.
+- Retain all six rounds and every participant; presentation must not hide or truncate data.
+
 ## Technical approach
 
 - Vue 3, TypeScript, Vite, and Pinia.
